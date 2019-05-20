@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -61,15 +59,7 @@ public class Controller {
 		
 		logger.info("Creating User : {}", trans);
 
-	/*	if (userService.isUserExist(user)) {
-			logger.error("Unable to create. A User with name {} already exist", user.getFull_name());
-			return new ResponseEntity(
-					new CustomErrorType(
-							"Unable to create. A User with name " + user.getFull_name() + " already exist."),
-					HttpStatus.CONFLICT);
-		}*/
-		//userService.saveUser(user);
-		
+
 		if(trans.getValue() >= 100){
 			return new ResponseEntity(
 					new CustomErrorType("401", "Transação não autorizada, pois o valor não pode ser superior há 99"),
