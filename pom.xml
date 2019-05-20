@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>com.transactions</groupId>
-	<artifactId>transactions</artifactId>
+	<artifactId>transactions-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>transactions</name>
-	<description>transactions</description>
+	<name>transactions-api</name>
+	<description>transactions-api</description>
 
 	<properties>
 		<java.version>1.8</java.version>
