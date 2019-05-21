@@ -1,0 +1,9 @@
+version: '2.3'
+volumes:
+  dados:
+services:
+  transactions-api:
+    image: edivaldo100/transactions-api:1.0.0
+    container_name: transactions-api
+    ports:
+      - 8080:8080
