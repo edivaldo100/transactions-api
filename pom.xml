@@ -12,7 +12,7 @@
 
 	<groupId>com.transactions</groupId>
 	<artifactId>transactions-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>transactions-api</name>
 	<description>transactions-api</description>
 
@@ -47,16 +47,40 @@
 		
 	</dependencies>
 
-	<build>
+<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.11</version>
 				<configuration>
-					<mainClass>com.picpay.users.UsersApplication</mainClass>
+					<imageName>edivaldo100/${project.artifactId}:${project.version}</imageName>
+					<dockerDirectory>src/Docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.basedir}/src/main/resources</directory>
+							<include>*.*</include>
+						</resource>
+
+					</resources>
 				</configuration>
 			</plugin>
 		</plugins>
+	
+		
 	</build>
 
 </project>
