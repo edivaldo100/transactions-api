@@ -3,10 +3,10 @@ package com.transactions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ServiceEdgeCasesTest {
+class ServiceEdgeCasesTest {
 
     @Test
-    public void createValueZeroAllowed() {
+    void createValueZeroAllowed() {
         InMemoryTransactionRepository repo = new InMemoryTransactionRepository();
         DefaultTransactionService service = new DefaultTransactionService(repo);
 
@@ -22,7 +22,7 @@ public class ServiceEdgeCasesTest {
     }
 
     @Test
-    public void createValueNinetyNineAllowed() {
+    void createValueNinetyNineAllowed() {
         InMemoryTransactionRepository repo = new InMemoryTransactionRepository();
         DefaultTransactionService service = new DefaultTransactionService(repo);
 
@@ -37,4 +37,3 @@ public class ServiceEdgeCasesTest {
         assertEquals(99L, created.getValue().longValue());
     }
 }
-

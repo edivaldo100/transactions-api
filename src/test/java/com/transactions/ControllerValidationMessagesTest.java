@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(Controller.class)
-public class ControllerValidationMessagesTest {
+class ControllerValidationMessagesTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -26,7 +26,7 @@ public class ControllerValidationMessagesTest {
     private TransactionService transactionService;
 
     @Test
-    public void postMissingValueReturnsValidationMessage() throws Exception {
+    void postMissingValueReturnsValidationMessage() throws Exception {
         String payload = "{\"payee_id\":10,\"payer_id\":20}";
 
         mockMvc.perform(post("/transactions").contentType(MediaType.APPLICATION_JSON).content(payload))

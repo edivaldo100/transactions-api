@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 import java.time.Instant;
-import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,16 +22,18 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(Controller.class)
-public class ControllerTest {
+class ControllerTest {
 
     @Autowired
+    @SuppressWarnings("unused") // injected by Spring
     private MockMvc mockMvc;
 
     @MockBean
+    @SuppressWarnings("unused") // used by Mockito
     private TransactionService transactionService;
 
     @Test
-    public void getListReturnsOk() throws Exception {
+    void getListReturnsOk() throws Exception {
         Trans t = new Trans();
         t.setId(1L);
         t.setPayeeId(10L);
@@ -39,7 +41,7 @@ public class ControllerTest {
         t.setValue(50L);
         t.setTimestamp(Instant.now());
 
-        when(transactionService.findAll()).thenReturn(Arrays.asList(t));
+        when(transactionService.findAll()).thenReturn(Collections.singletonList(t));
 
         mockMvc.perform(get("/transactions"))
                 .andExpect(status().isOk())
@@ -47,7 +49,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void postInvalidReturnsBadRequest() throws Exception {
+    void postInvalidReturnsBadRequest() throws Exception {
         String payload = "{\"payee_id\":10,\"payer_id\":20}"; // missing value
 
         mockMvc.perform(post("/transactions").contentType(MediaType.APPLICATION_JSON).content(payload))
@@ -55,7 +57,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void postValidReturnsCreated() throws Exception {
+    void postValidReturnsCreated() throws Exception {
         String payload = "{\"payee_id\":10,\"payer_id\":20,\"value\":50}";
 
         Trans created = new Trans();

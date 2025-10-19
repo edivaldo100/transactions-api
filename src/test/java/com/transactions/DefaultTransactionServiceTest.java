@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-public class DefaultTransactionServiceTest {
+class DefaultTransactionServiceTest {
 
     @Test
-    public void createValidTransaction() {
+    void createValidTransaction() {
         InMemoryTransactionRepository repo = new InMemoryTransactionRepository();
         DefaultTransactionService service = new DefaultTransactionService(repo);
 
@@ -27,7 +27,7 @@ public class DefaultTransactionServiceTest {
     }
 
     @Test
-    public void createInvalidTransactionThrows() {
+    void createInvalidTransactionThrows() {
         InMemoryTransactionRepository repo = new InMemoryTransactionRepository();
         DefaultTransactionService service = new DefaultTransactionService(repo);
 
