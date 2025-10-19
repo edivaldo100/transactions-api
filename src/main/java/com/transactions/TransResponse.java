@@ -2,26 +2,29 @@ package com.transactions;
 
 import java.time.Instant;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@Entity
-@Table(name = "transactions")
-public class TransactionEntity {
+@Schema(description = "Transaction response returned by the API")
+public class TransResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Transaction id", example = "1")
     private Long id;
 
-    @Column(name = "payee_id")
+    @JsonProperty("payee_id")
+    @Schema(description = "ID of the payee (receiver)", example = "10")
     private Long payeeId;
 
-    @Column(name = "payer_id")
+    @JsonProperty("payer_id")
+    @Schema(description = "ID of the payer (sender)", example = "20")
     private Long payerId;
 
-    @Column(name = "timestamp", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
+    @Schema(description = "Timestamp (UTC)", example = "2023-01-01T00:00:00Z")
     private Instant timestamp;
 
-    @Column(name = "transaction_value")
+    @Schema(description = "Transaction amount", example = "50")
     private Long value;
 
     public Long getId() {

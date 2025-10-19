@@ -2,8 +2,9 @@ package com.transactions;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+// OpenAPI annotations
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/transactions")
@@ -26,15 +30,18 @@ public class Controller {
     }
 
     @GetMapping
-    public ResponseEntity<List<Trans>> list() {
+    @Operation(summary = "List transactions", description = "Returns a list of transactions. Returns 204 when empty.")
+    public ResponseEntity<List<TransResponse>> list() {
         List<Trans> listaTrans = transactionService.findAll();
         if (listaTrans.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(listaTrans);
+        List<TransResponse> resp = listaTrans.stream().map(TransMapper::toResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(resp);
     }
 
     @GetMapping("/{transaction_id}")
+    @Operation(summary = "Get transaction", description = "Returns a single transaction by id. Returns 404 when not found.")
     public ResponseEntity<?> listOne(@PathVariable("transaction_id") long transaction_id) {
         Optional<Trans> opt = transactionService.findById(transaction_id);
         if (!opt.isPresent()) {
@@ -42,10 +49,12 @@ public class Controller {
                     new CustomErrorType("404", "Transação não Encontrada!"),
                     HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(opt.get());
+        TransResponse resp = TransMapper.toResponse(opt.get());
+        return ResponseEntity.ok(resp);
     }
 
     @PostMapping
+    @Operation(summary = "Create transaction", description = "Creates a transaction. Value must be between 0 and 99.")
     public ResponseEntity<?> create(@Valid @RequestBody TransRequest request, UriComponentsBuilder ucBuilder) {
         logger.info("Creating Transaction request: {}", request);
 
@@ -58,7 +67,8 @@ public class Controller {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/transactions/{id}").buildAndExpand(created.getId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        TransResponse resp = TransMapper.toResponse(created);
+        return new ResponseEntity<>(resp, headers, HttpStatus.CREATED);
     }
 
 }

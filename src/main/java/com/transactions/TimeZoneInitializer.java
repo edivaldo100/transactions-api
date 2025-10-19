@@ -4,7 +4,7 @@ import java.time.DateTimeException;
 import java.time.ZoneId;
 import java.util.TimeZone;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,4 +32,3 @@ public class TimeZoneInitializer {
         logger.info("JVM default timezone set to {}", tz);
     }
 }
-

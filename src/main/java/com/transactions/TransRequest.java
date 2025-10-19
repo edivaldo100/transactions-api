@@ -1,20 +1,26 @@
 package com.transactions;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Request to create a transaction")
 public class TransRequest {
 
     @NotNull
+    @Schema(description = "ID of the payee (receiver)", example = "10")
     private Long payee_id;
 
     @NotNull
+    @Schema(description = "ID of the payer (sender)", example = "20")
     private Long payer_id;
 
     @NotNull
     @Min(0)
     @Max(99)
+    @Schema(description = "Transaction amount. Must be between 0 and 99 inclusive.", example = "50")
     private Long value;
 
     public Long getPayee_id() {
@@ -41,4 +47,3 @@ public class TransRequest {
         this.value = value;
     }
 }
-
