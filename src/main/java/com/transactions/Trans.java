@@ -1,20 +1,25 @@
 package com.transactions;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Trans {
 	
 	private Long id;
-	private Long payee_id;
-	private Long payer_id;
-	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="PST")
-	private Timestamp timestamp;
-	
+
+	@JsonProperty("payee_id")
+	private Long payeeId;
+
+	@JsonProperty("payer_id")
+	private Long payerId;
+
+	// serialized in UTC as ISO-8601
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
+	private Instant timestamp;
+
 	private Long value;
 	public Long getId() {
 		return id;
@@ -22,23 +27,22 @@ public class Trans {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getPayee_id() {
-		return payee_id;
+	public Long getPayeeId() {
+		return payeeId;
 	}
-	public void setPayee_id(Long payee_id) {
-		this.payee_id = payee_id;
+	public void setPayeeId(Long payeeId) {
+		this.payeeId = payeeId;
 	}
-	public Long getPayer_id() {
-		return payer_id;
+	public Long getPayerId() {
+		return payerId;
 	}
-	public void setPayer_id(Long payer_id) {
-		this.payer_id = payer_id;
+	public void setPayerId(Long payerId) {
+		this.payerId = payerId;
 	}
-
-	public Timestamp getTimestamp() {
+	public Instant getTimestamp() {
 		return timestamp;
 	}
-	public void setTimestamp(Timestamp timestamp) {
+	public void setTimestamp(Instant timestamp) {
 		this.timestamp = timestamp;
 	}
 	public Long getValue() {
@@ -47,6 +51,16 @@ public class Trans {
 	public void setValue(Long value) {
 		this.value = value;
 	}
-	
+	@Override
+	public String toString() {
+		return "Trans{" +
+				"id=" + id +
+				", payeeId=" + payeeId +
+				", payerId=" + payerId +
+				", timestamp=" + timestamp +
+				", value=" + value +
+				'}';
+	}
+
 	
 }
