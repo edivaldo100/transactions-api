@@ -1,7 +1,7 @@
 package com.transactions;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class DefaultTransactionServiceTest {
         assertEquals(1, all.size());
     }
 
-    @Test(expected = TransactionValidationException.class)
+    @Test
     public void createInvalidTransactionThrows() {
         InMemoryTransactionRepository repo = new InMemoryTransactionRepository();
         DefaultTransactionService service = new DefaultTransactionService(repo);
@@ -36,7 +36,6 @@ public class DefaultTransactionServiceTest {
         t.setPayerId(20L);
         t.setValue(100L); // invalid
 
-        service.create(t);
+        assertThrows(TransactionValidationException.class, () -> service.create(t));
     }
 }
-

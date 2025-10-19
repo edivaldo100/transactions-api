@@ -7,9 +7,11 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Profile("test")
 public class InMemoryTransactionRepository implements TransactionRepository {
 
     private final List<Trans> storage = new CopyOnWriteArrayList<>();
